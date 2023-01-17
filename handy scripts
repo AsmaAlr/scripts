@@ -1,0 +1,13 @@
+$search = Read-Host "Please enter a directory"
+$files = Get-ChildItem $search -Recurse -Include *.*
+foreach ($file in $files) {
+    $lines = Get-Content $file.FullName
+    $lineNumber = 0
+    foreach ($line in $lines) {
+        $lineNumber++
+        if ($line -match '(?i)^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$') {
+            Write-Host "Password found in file ${file} on line ${lineNumber}: $line"
+        }
+    }
+}
+
